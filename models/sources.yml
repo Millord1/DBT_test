@@ -4,7 +4,7 @@ version: 2
 # Une table declaree ici s'ecrit {{ source('megabase0', 'commune') }} dans un
 # modele. A completer : ajoutez vos typologies sous "tables".
 sources:
-  - name: theau_megab_2687
+  - name: "{{env_var('DB_NAME')}}"
     schema: public
     tables:
       - name: commune

@@ -1,8 +1,3 @@
-# dbt_start : le squelette du brief 08
-
-Un projet dbt minimal, prêt à lancer sur `megabase0`. À copier au début du
-brief 08.
-
 | Fichier | Rôle |
 |---|---|
 | `dbt_project.yml` | le projet : nom, dossier des modèles, matérialisation |
@@ -26,7 +21,7 @@ dbt debug          # attendu : "All checks passed"
 dbt run
 ```
 
-Commandes utiles: 
+## Commandes utiles: 
 
 ```bash
 dbt deps

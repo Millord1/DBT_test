@@ -6,6 +6,5 @@ model-paths: ["models"]
 
 models:
   entrepot_dbt:
-    # Des tables, comme au brief 07 (le defaut dbt est la vue).
+    # DBT default = view
     +materialized: table
-
