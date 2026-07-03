@@ -1,0 +1,155 @@
+version: 2
+
+models:
+  - name: dim_commune
+    description: "Liste de toutes les communes avec leur département et région"
+    columns:
+      - name: insee_code
+        data_type: text
+        tests:
+          - unique
+          - not_null
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: "^[0-9]{5}$"
+
+      - name: commune
+        data_type: text
+        description: ""
+        tests:
+          - not_null
+
+      - name: departement
+        data_type: text
+        description: ""
+
+      - name: region
+        data_type: text
+        description: ""
+
+      - name: population
+        data_type: integer
+        description: ""
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+  - name: fait_etablissement
+    description: "Les types d'établissements avec leur code insee et le nombre par commune"
+    columns:
+      - name: type
+        data_type: text
+        description: ""
+        tests:
+          - not_null
+
+      - name: nb
+        data_type: bigint
+        description: ""
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: insee_code
+        data_type: text
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_commune')
+              field: insee_code
+
+  - name: mart_etablissements_departement
+    description: "Nombre n d'établissements par département"
+    columns:
+      - name: n
+        description: "Somme cumulée des établissements"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: departement
+        data_type: text
+        description: ""
+        tests:
+          - not_null
+
+      - name: type
+        data_type: text
+        description: ""
+        tests:
+          - relationships:
+              to: ref('fait_etablissement')
+              field: type
+
+  - name: mart_hab_per_pharma_commune
+    description: "Nombre d'habitants moyens par pharmacie, par commune"
+    columns:
+      - name: total_pharmacies
+        data_type: numeric
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 2000
+
+      - name: population
+        data_type: integer
+        tests:
+          - not_null
+
+      - name: commune
+        data_type: text
+        description: ""
+
+      - name: hab_per_pharmacie
+        data_type: numeric
+        description: ""
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              row_condition: "total_pharmacies > 0"
+
+  - name: stats_etab_commune
+    description: ""
+    columns:
+      - name: service_type
+        data_type: text
+        description: "Type d'établissement"
+        tests:
+          - accepted_values:
+              values: "{{ dbt_utils.get_column_values(table=ref('fait_etablissement'), column='type') }}"
+
+      - name: nombre_communes
+        data_type: bigint
+        description: "total de communes impactées"
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 1
+
+      - name: max_par_commune
+        data_type: bigint
+        description: ""
+
+      - name: percentile_10_par_commune
+        data_type: numeric
+        description: ""
+
+      - name: percentile_25_par_commune
+        data_type: numeric
+        description: ""
+
+      - name: mediane_par_commune
+        data_type: numeric
+        description: "Médiane d'établissements"
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: percentile_75_par_commune
+        data_type: numeric
+        description: ""
+
+      - name: percentile_90_par_commune
+        data_type: numeric
+        description: ""

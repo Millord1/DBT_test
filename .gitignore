@@ -1,0 +1,13 @@
+env
+.env
+__pycache__
+*.pyc
+Brief_08.md
+dbt_packages/
+target/
+logs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.user.yml

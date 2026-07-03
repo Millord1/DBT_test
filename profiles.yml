@@ -1,0 +1,25 @@
+# Connexion locale a megabase0 (authentification trust : pas de mot de passe).
+# dbt lit ce fichier dans le dossier du projet, sinon dans ~/.dbt/profiles.yml.
+# Les modeles sont construits dans le schema cible "dbt", pas dans public.
+entrepot_dbt:
+  target: dev
+  outputs:
+    prod:
+      type: postgres
+      host: theau-megab-2687.postgresql.c.osc-fr1.scalingo-dbs.com
+      port: 33397
+      user: theau_megab_2687
+      password: "{{ env_var('SCALINGO_PG_PASSWORD') }}"
+      dbname: theau_megab_2687
+      schema: dbt
+      threads: 4
+
+    dev:
+      type: postgres
+      host: 127.0.0.1
+      port: 5432
+      user: postgres
+      password: "{{ env_var('DB_PASSWORD') }}"
+      dbname: megabase0
+      schema: dbt
+      threads: 4
