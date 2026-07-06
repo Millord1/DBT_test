@@ -1,4 +1,6 @@
-SELECT c.commune::VARCHAR(150), c.population::INTEGER,
+SELECT 
+    c.commune::VARCHAR(150), 
+    c.population::INTEGER,
     COALESCE(SUM(CASE WHEN f.type = 'pharmacie' THEN f.nb END), 0) AS total_pharmacies,
     ROUND(c.population::numeric / NULLIF(SUM(CASE WHEN f.type = 'pharmacie' THEN f.nb END), 0), 2) AS hab_per_pharmacie
 FROM {{ ref('dim_commune') }} AS c
