@@ -5,7 +5,7 @@ models:
     description: "Liste de toutes les communes avec leur département et région"
     columns:
       - name: insee_code
-        data_type: text
+        data_type: varchar(5)
         tests:
           - unique
           - not_null
@@ -13,17 +13,17 @@ models:
               regex: "^[0-9]{5}$"
 
       - name: commune
-        data_type: text
+        data_type: varchar(150)
         description: ""
         tests:
           - not_null
 
       - name: departement
-        data_type: text
+        data_type: varchar(150)
         description: ""
 
       - name: region
-        data_type: text
+        data_type: varchar(150)
         description: ""
 
       - name: population

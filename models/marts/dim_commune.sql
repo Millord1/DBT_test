@@ -22,10 +22,10 @@ staging_region as (
 
 finale AS (
     SELECT 
-        c.insee_code,
-        c.name AS commune,
-        d.name AS departement,
-        r.name AS region,
+        c.insee_code::VARCHAR(5),
+        c.name::VARCHAR(150) AS commune,
+        d.name::VARCHAR(150) AS departement,
+        r.name::VARCHAR(150) AS region,
         c.population
     FROM staging_commune AS c
     JOIN staging_departement AS d ON d.code_departement = c.code_departement

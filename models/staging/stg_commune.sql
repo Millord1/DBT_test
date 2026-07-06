@@ -7,7 +7,7 @@ cleaned AS (
         {{ clean_insee_code('insee_code') }} AS insee_code,
         {{ remove_accents_and_upper('name') }} AS name,
         population,
-        cast(left(code_departement, 3) as varchar(3)) as code_departement
+        {{ cast_varchar_truncated('code_departement') }} as code_departement
     FROM source_data
 )
 

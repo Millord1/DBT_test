@@ -4,9 +4,9 @@ WITH source_data AS (
 
 cleaned AS (
     SELECT 
-        {{ remove_accents_and_upper('name') }} AS name,
-        cast(left(code_departement, 3) as varchar(3)) as code_departement,
-        cast(left(code_region, 3) as varchar(3)) as code_region
+        {{ remove_accents_and_upper('name') }}::VARCHAR(150) AS name,
+        {{ cast_varchar_truncated('code_departement') }} as code_departement,
+        {{ cast_varchar_truncated('code_region') }} as code_region
     FROM source_data
 )
 
