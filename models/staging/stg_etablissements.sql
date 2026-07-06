@@ -1,3 +1,7 @@
+{{ config(
+    materialized='ephemeral'
+) }}
+
 WITH source_data AS (
     SELECT insee_code, 'lycee' AS type, COUNT(*) AS nb 
         FROM {{ source('public', 'lycee') }} 

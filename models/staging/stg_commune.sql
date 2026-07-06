@@ -1,3 +1,7 @@
+{{ config(
+    materialized='ephemeral'
+) }}
+
 WITH source_data AS (
     SELECT * FROM {{ source('public', 'commune') }}
 ),

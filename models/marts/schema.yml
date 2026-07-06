@@ -37,7 +37,7 @@ models:
     description: "Les types d'établissements avec leur code insee et le nombre par commune"
     columns:
       - name: type
-        data_type: text
+        data_type: varchar(100)
         description: ""
         tests:
           - not_null
@@ -51,7 +51,7 @@ models:
               min_value: 0
 
       - name: insee_code
-        data_type: text
+        data_type: varchar(5)
         tests:
           - not_null
           - relationships:
@@ -63,19 +63,20 @@ models:
     columns:
       - name: n
         description: "Somme cumulée des établissements"
+        data_type: integer
         tests:
           - not_null
           - dbt_expectations.expect_column_values_to_be_between:
               min_value: 0
 
       - name: departement
-        data_type: text
+        data_type: varchar(100)
         description: ""
         tests:
           - not_null
 
       - name: type
-        data_type: text
+        data_type: varchar(150)
         description: ""
         tests:
           - relationships:
@@ -99,7 +100,7 @@ models:
           - not_null
 
       - name: commune
-        data_type: text
+        data_type: varchar(150)
         description: ""
 
       - name: hab_per_pharmacie
@@ -114,7 +115,7 @@ models:
     description: ""
     columns:
       - name: service_type
-        data_type: text
+        data_type: varchar(150)
         description: "Type d'établissement"
         tests:
           - accepted_values:

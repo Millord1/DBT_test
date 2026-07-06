@@ -1,3 +1,7 @@
+{{ config(
+    materialized='ephemeral'
+) }}
+
 WITH source_data AS (
     SELECT name, code_departement, code_region FROM {{ source('public', 'departement') }}
 ),
