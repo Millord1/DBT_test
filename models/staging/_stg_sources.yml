@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: public
+    tables:
+      - name: bibliotheque
+      - name: clubs_boxe_thai
+      - name: college
+      - name: commune
+      - name: dechets_radioactifs
+      - name: departement
+      - name: ehpad
+      - name: lycee
+      - name: mairie
+      - name: pharmacie
+      - name: region
